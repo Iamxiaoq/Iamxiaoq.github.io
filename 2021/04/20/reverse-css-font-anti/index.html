@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前言在前东家的时候获取过一部分某评的POI数据，那时第一次遇到自定义CSS字体反爬这种骚操作给我留下很深的印象，近期又有需求需要获取当前城市一部分POI数据。故地重游，相同的套路，不过随着经验的增长，不再需要当初一个个字体逆向记录了，今日把该分析过程记录一下。 前端分析 CSS字体加密调出Chrome开发者工具，审核元素，发现部分信息的通过自定义css字体样式来实现加密的，从源码中可以看到每个字体">
+<meta property="og:type" content="article">
+<meta property="og:title" content="逆向分析某评CSS字体反爬">
+<meta property="og:url" content="http://xiaoq1024.github.io/2021/04/20/reverse-css-font-anti/index.html">
+<meta property="og:site_name" content="xiaoq.py">
+<meta property="og:description" content="前言在前东家的时候获取过一部分某评的POI数据，那时第一次遇到自定义CSS字体反爬这种骚操作给我留下很深的印象，近期又有需求需要获取当前城市一部分POI数据。故地重游，相同的套路，不过随着经验的增长，不再需要当初一个个字体逆向记录了，今日把该分析过程记录一下。 前端分析 CSS字体加密调出Chrome开发者工具，审核元素，发现部分信息的通过自定义css字体样式来实现加密的，从源码中可以看到每个字体">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://xiaoq1024.github.io/images/css_font_anti/front_end.png">
+<meta property="og:image" content="http://xiaoq1024.github.io/images/css_font_anti/render.png">
+<meta property="og:image" content="http://xiaoq1024.github.io/images/css_font_anti/img2text.png">
+<meta property="og:image" content="http://xiaoq1024.github.io/images/css_font_anti/capture_screen.png">
+<meta property="og:updated_time" content="2021-04-25T08:49:06.906Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="逆向分析某评CSS字体反爬">
+<meta name="twitter:description" content="前言在前东家的时候获取过一部分某评的POI数据，那时第一次遇到自定义CSS字体反爬这种骚操作给我留下很深的印象，近期又有需求需要获取当前城市一部分POI数据。故地重游，相同的套路，不过随着经验的增长，不再需要当初一个个字体逆向记录了，今日把该分析过程记录一下。 前端分析 CSS字体加密调出Chrome开发者工具，审核元素，发现部分信息的通过自定义css字体样式来实现加密的，从源码中可以看到每个字体">
+<meta name="twitter:image" content="http://xiaoq1024.github.io/images/css_font_anti/front_end.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://xiaoq1024.github.io/2021/04/20/reverse-css-font-anti/">
+
+
+
+
+
+  <title>逆向分析某评CSS字体反爬 | xiaoq.py</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">xiaoq.py</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Keep learning</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://xiaoq1024.github.io/2021/04/20/reverse-css-font-anti/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xiaoq">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/ali.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xiaoq.py">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">逆向分析某评CSS字体反爬</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-04-20T10:32:42+08:00">
+                2021-04-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/spider/" itemprop="url" rel="index">
+                    <span itemprop="name">spider</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在前东家的时候获取过一部分某评的POI数据，那时第一次遇到自定义CSS字体反爬这种骚操作给我留下很深的印象，近期又有需求需要获取当前城市一部分POI数据。故地重游，相同的套路，不过随着经验的增长，不再需要当初一个个字体逆向记录了，今日把该分析过程记录一下。</p>
+<h3 id="前端分析-CSS字体加密"><a href="#前端分析-CSS字体加密" class="headerlink" title="前端分析 CSS字体加密"></a>前端分析 CSS字体加密</h3><p>调出Chrome开发者工具，审核元素，发现部分信息的通过自定义css字体样式来实现加密的，从源码中可以看到每个字体都有一个编号，浏览器会根据该编号去网站指定的字体文件中选择对应的字符画出。</p>
+<p><img src="/images/css_font_anti/front_end.png" alt></p>
+<a id="more"></a>
+<p>其对应的网页源码为：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">e</span> <span class="attr">class</span>=<span class="string">"address"</span>&gt;</span><span class="symbol">&amp;#xe646;</span><span class="tag">&lt;/<span class="name">e</span>&gt;</span> //八</span><br><span class="line">卦</span><br><span class="line"><span class="tag">&lt;<span class="name">e</span> <span class="attr">class</span>=<span class="string">"address"</span>&gt;</span><span class="symbol">&amp;#xf58d;</span><span class="tag">&lt;/<span class="name">e</span>&gt;</span> //岭</span><br><span class="line"><span class="tag">&lt;<span class="name">e</span> <span class="attr">class</span>=<span class="string">"address"</span>&gt;</span><span class="symbol">&amp;#xf316;</span><span class="tag">&lt;/<span class="name">e</span>&gt;</span> // 路</span><br><span class="line"><span class="tag">&lt;<span class="name">d</span> <span class="attr">class</span>=<span class="string">"num"</span>&gt;</span><span class="symbol">&amp;#xe757;</span><span class="tag">&lt;/<span class="name">d</span>&gt;</span> // 6</span><br><span class="line">1</span><br><span class="line"><span class="tag">&lt;<span class="name">d</span> <span class="attr">class</span>=<span class="string">"num"</span>&gt;</span><span class="symbol">&amp;#xe2dc;</span><span class="tag">&lt;/<span class="name">d</span>&gt;</span>  // 9</span><br><span class="line"><span class="tag">&lt;<span class="name">e</span> <span class="attr">class</span>=<span class="string">"address"</span>&gt;</span><span class="symbol">&amp;#xecfc;</span><span class="tag">&lt;/<span class="name">e</span>&gt;</span> //栋</span><br></pre></td></tr></table></figure>
+<p>其对应的部分css样式为：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@font-face</span> &#123;</span><br><span class="line">    <span class="attribute">font-family</span>: <span class="string">"PingFangSC-Regular-num"</span>;</span><br><span class="line">    <span class="attribute">src</span>: <span class="built_in">url</span>(<span class="string">"xxxxxxxxxxxxxxxx.ss_73a511b8f91f43d0bdae92584ea6330b/font/b6083009.eot"</span>);</span><br><span class="line">    <span class="attribute">src</span>: <span class="built_in">url</span>(<span class="string">"xxxxxxxxxxxxxxxx.ss_73a511b8f91f43d0bdae92584ea6330b/font/b6083009.eot?#iefix"</span>) <span class="built_in">format</span>(<span class="string">"embedded-opentype"</span>),<span class="built_in">url</span>(<span class="string">"xxxxxxxxxxxxxxxx.ss_73a511b8f91f43d0bdae92584ea6330b/font/b6083009.woff"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.num</span> &#123;</span><br><span class="line">    <span class="attribute">font-family</span>: <span class="string">'PingFangSC-Regular-num'</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@font-face</span> &#123;</span><br><span class="line">    <span class="attribute">font-family</span>: <span class="string">"PingFangSC-Regular-address"</span>;</span><br><span class="line">    <span class="attribute">src</span>: <span class="built_in">url</span>(<span class="string">"xxxxxxxxxxxxxxxx.ss_73a511b8f91f43d0bdae92584ea6330b/font/b6083009.eot"</span>);</span><br><span class="line">    <span class="attribute">src</span>: <span class="built_in">url</span>(<span class="string">"xxxxxxxxxxxxxxxx.ss_73a511b8f91f43d0bdae92584ea6330b/font/b6083009.eot?#iefix"</span>) <span class="built_in">format</span>(<span class="string">"embedded-opentype"</span>),<span class="built_in">url</span>(<span class="string">"xxxxxxxxxxxxxxxx.ss_73a511b8f91f43d0bdae92584ea6330b/font/b6083009.woff"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.address</span> &#123;</span><br><span class="line">    <span class="attribute">font-family</span>: <span class="string">'PingFangSC-Regular-address'</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="逆向还原"><a href="#逆向还原" class="headerlink" title="逆向还原"></a>逆向还原</h3><ol>
+<li>获取所有的样式和字体文件</li>
+<li>获取字体文件所有的编码</li>
+<li>建立编码到字体样式，输出到网页中</li>
+<li>浏览器打开网页，截图识别</li>
+<li>建立编码到字符的映射 <code>{&#39;e646&#39;: &#39;八&#39;...}</code> </li>
+</ol>
+<h4 id="提取class和其对于的字体文件"><a href="#提取class和其对于的字体文件" class="headerlink" title="提取class和其对于的字体文件"></a>提取<code>class</code>和其对于的字体文件</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">parse_css_font</span><span class="params">(css_url)</span>:</span></span><br><span class="line">    <span class="string">'''提取class和对应的字体文件'''</span></span><br><span class="line">    response = requests.get(css_url)</span><br><span class="line">    css_text = response.text</span><br><span class="line">    class_font = re.findall(<span class="string">r'@font.+?PingFangSC-Regular-(\w+).+?opentype"\),url\("//(.+?\.woff)'</span>, css_text)</span><br><span class="line">    <span class="keyword">return</span> class_font</span><br><span class="line"></span><br><span class="line">css_url = http://xxxx/mss_0a81b5466f56b91/svgtextcss/c4ccbdb0d5d51e04b74ecaa5e567b330.css</span><br><span class="line">class_font = parse_css_font(css_url)</span><br><span class="line">print(class_font)  <span class="comment"># [('address', 's3pluxxxx6330b/font/b6083009.woff'), ...]</span></span><br></pre></td></tr></table></figure>
+<h4 id="提取字体文件包含的所有Unicode编码"><a href="#提取字体文件包含的所有Unicode编码" class="headerlink" title="提取字体文件包含的所有Unicode编码"></a>提取字体文件包含的所有Unicode编码</h4><p>依赖<code>fontTools</code>包 <code>pip install fontTools</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">from</span> fontTools.ttLib <span class="keyword">import</span> TTFont</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">download</span><span class="params">(url, file)</span>:</span></span><br><span class="line">    response = requests.get(url)</span><br><span class="line">    <span class="keyword">with</span> open(file, <span class="string">'wb'</span>) <span class="keyword">as</span> f:</span><br><span class="line">        f.write(response.content)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_font_unicode</span><span class="params">(url)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> url.startswith(<span class="string">'http'</span>):</span><br><span class="line">        url = <span class="string">f'http://<span class="subst">&#123;url&#125;</span>'</span></span><br><span class="line">    font_file = parse.urlparse(url).path.split(<span class="string">'/'</span>)[<span class="number">-1</span>]</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(font_file):</span><br><span class="line">        download(url, font_file)</span><br><span class="line"></span><br><span class="line">    font = TTFont(font_file)</span><br><span class="line">    uu = font.getGlyphOrder()</span><br><span class="line">    <span class="keyword">return</span> [u[<span class="number">3</span>:] <span class="keyword">for</span> u <span class="keyword">in</span> uu <span class="keyword">if</span> u.startswith(<span class="string">'uni'</span>)]</span><br><span class="line"></span><br><span class="line">font_url = <span class="string">'xxxxe92584ea6330b/font/b6083009.woff'</span></span><br><span class="line">unicode = get_font_unicode(font_url)</span><br><span class="line">print(unicode)  <span class="comment"># ['f4a7', 'f183',...'f816']</span></span><br></pre></td></tr></table></figure>
+<h4 id="建立Unicode与字体样式绑定网页"><a href="#建立Unicode与字体样式绑定网页" class="headerlink" title="建立Unicode与字体样式绑定网页"></a>建立Unicode与字体样式绑定网页</h4><p>由于字体文件<code>*.woff</code>仅描述了编号与其对于的绘画方式，并没有具体对于的字符，所以需要调用浏览器渲染画出后才能知道具体是哪个字符。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_font_div</span><span class="params">(class_, font_url)</span>:</span></span><br><span class="line">    div_template = <span class="string">'&lt;div&gt;&#123;class_&#125;&lt;div class="&#123;class_&#125; "&gt;&#123;content&#125;&lt;/div&gt;&lt;/div&gt;'</span></span><br><span class="line"></span><br><span class="line">    unicode = get_font_unicode(font_url)</span><br><span class="line">    content = <span class="string">' '</span>.join(<span class="string">f'<span class="subst">&#123;u&#125;</span>:&amp;#x<span class="subst">&#123;u&#125;</span>;'</span> <span class="keyword">for</span> u <span class="keyword">in</span> unicode)</span><br><span class="line">    <span class="comment"># content = ' '.join(f'&amp;#x&#123;u&#125;;' for u in unicode)</span></span><br><span class="line">    div = div_template.format(class_=class_, content=content)</span><br><span class="line">    <span class="keyword">return</span> div</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">render_html</span><span class="params">(css_url)</span>:</span></span><br><span class="line">    template = <span class="string">'''</span></span><br><span class="line"><span class="string">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="string">&lt;html lang="zh"&gt;</span></span><br><span class="line"><span class="string">&lt;head&gt;</span></span><br><span class="line"><span class="string">    &lt;meta charset="UTF-8"&gt;</span></span><br><span class="line"><span class="string">    &lt;title&gt;Title&lt;/title&gt;</span></span><br><span class="line"><span class="string">    &lt;link rel="stylesheet" type="text/css" href="&#123;css_url&#125;"&gt;</span></span><br><span class="line"><span class="string">&lt;/head&gt;</span></span><br><span class="line"><span class="string">&lt;body style="word-wrap: break-word"&gt;</span></span><br><span class="line"><span class="string">    &#123;body&#125;</span></span><br><span class="line"><span class="string">&lt;/body&gt;</span></span><br><span class="line"><span class="string">&lt;/html&gt;</span></span><br><span class="line"><span class="string">    '''</span></span><br><span class="line">    class_font = parse_css_font(css_url)</span><br><span class="line">    body = <span class="string">''</span></span><br><span class="line">    <span class="keyword">for</span> class_, font_url <span class="keyword">in</span> class_font:</span><br><span class="line">        div = get_font_div(class_, font_url)</span><br><span class="line">        body = body + <span class="string">'\n'</span> + div</span><br><span class="line"></span><br><span class="line">    html = template.format(css_url=css_url, body=body)</span><br><span class="line">    wf = open(<span class="string">'font.html'</span>, <span class="string">'w'</span>, encoding=<span class="string">'utf-8'</span>)</span><br><span class="line">    wf.write(html)</span><br><span class="line">    wf.close()</span><br><span class="line">    print(html)</span><br><span class="line">    <span class="keyword">return</span> html</span><br></pre></td></tr></table></figure>
+<p>得到的网页<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"zh"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">type</span>=<span class="string">"text/css"</span> <span class="attr">href</span>=<span class="string">"http://s3pxxxxs_0a06a471f9514fc79c981b5466f56b91/svgtextcss/c4ccbdb0d5d51e04b74ecaa5e567b330.css"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span> <span class="attr">style</span>=<span class="string">"word-wrap: break-word"</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span>dishname<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"dishname "</span>&gt;</span>f4a7:<span class="symbol">&amp;#xf4a7;</span> e7d3:<span class="symbol">&amp;#xe7d3;</span> e53e:<span class="symbol">&amp;#xe53e;</span> f3a1:<span class="symbol">&amp;#xf3a1;</span> ef0a:<span class="symbol">&amp;#xef0a;</span> eae6:<span class="symbol">&amp;#xeae6;</span> <span class="tag">&lt;/<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span>review<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"review "</span>&gt;</span>e78d:<span class="symbol">&amp;#xe78d;</span> f086:<span class="symbol">&amp;#xf086;</span> e335:<span class="symbol">&amp;#xe335;</span> <span class="tag">&lt;/<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span>hours<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"hours "</span>&gt;</span>ef58:<span class="symbol">&amp;#xef58;</span> e6fa:<span class="symbol">&amp;#xe6fa;</span> <span class="tag">&lt;/<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span>shopdesc<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"shopdesc "</span>&gt;</span>f1dc:<span class="symbol">&amp;#xf1dc;</span> f4bb:<span class="symbol">&amp;#xf4bb;</span> e23b:<span class="symbol">&amp;#xe23b;</span> ef4a:<span class="symbol">&amp;#xef4a;</span> f04a:<span class="symbol">&amp;#xf04a;</span> e364:<span class="symbol">&amp;#xe364;</span> e488:<span class="symbol">&amp;#xe488;</span> <span class="tag">&lt;/<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span>num<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"num "</span>&gt;</span>ec2d:<span class="symbol">&amp;#xec2d;</span> e502:<span class="symbol">&amp;#xe502;</span> e757:<span class="symbol">&amp;#xe757;</span> f5ea:<span class="symbol">&amp;#xf5ea;</span> e663:<span class="symbol">&amp;#xe663;</span> e2dc:<span class="symbol">&amp;#xe2dc;</span> f5b7:<span class="symbol">&amp;#xf5b7;</span> e6a9:<span class="symbol">&amp;#xe6a9;</span> e65e:<span class="symbol">&amp;#xe65e;</span> <span class="tag">&lt;/<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span>address<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"address "</span>&gt;</span>ec2d:<span class="symbol">&amp;#xec2d;</span> e6d1:<span class="symbol">&amp;#xe6d1;</span> edf7:<span class="symbol">&amp;#xedf7;</span> e34f:<span class="symbol">&amp;#xe34f;</span> f7ea:<span class="symbol">&amp;#xf7ea;</span> e975:<span class="symbol">&amp;#xe975;</span> f8ad:<span class="symbol">&amp;#xf8ad;</span> ed33:<span class="symbol">&amp;#xed33;</span> <span class="tag">&lt;/<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>浏览器打开效果图</p>
+<p><img src="/images/css_font_anti/render.png" alt></p>
+<h4 id="识图，建立映射"><a href="#识图，建立映射" class="headerlink" title="识图，建立映射"></a>识图，建立映射</h4><p>这里使用<a href="https://cloud.tencent.com/product/ocr-catalog" target="_blank" rel="noopener">腾讯OCR</a>提取图片的文字<br><img src="/images/css_font_anti/img2text.png" alt></p>
+<p>这里仅截取一部分演示，全部渲染十可以使用Chrome的长截图功能，开发中工具下<code>ctrl+shift+p</code>输入选择<code>capture full size screenshot</code><br><img src="/images/css_font_anti/capture_screen.png" alt></p>
+<p>得到映射表</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">unicode2char = &#123;</span><br><span class="line">  <span class="string">"dishname"</span>: &#123; <span class="string">"f4a7"</span>: <span class="string">"1"</span>, <span class="string">"f183"</span>: <span class="string">"2"</span>, <span class="string">"e4b5"</span>: <span class="string">"3"</span>, <span class="string">"ef85"</span>: <span class="string">"中"</span>, <span class="string">"f651"</span>: <span class="string">"美"</span>&#125;,</span><br><span class="line">  <span class="string">"review"</span>: &#123; <span class="string">"e78d"</span>: <span class="string">"1"</span>, <span class="string">"f893"</span>: <span class="string">"家"</span>, <span class="string">"efba"</span>: <span class="string">"馆"</span>, <span class="string">"fObe"</span>: <span class="string">"小"</span>, <span class="string">"ea09"</span>: <span class="string">"车"</span>,</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="解析网页转换字符"><a href="#解析网页转换字符" class="headerlink" title="解析网页转换字符"></a>解析网页转换字符</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">trim</span><span class="params">(s)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> re.sub(<span class="string">'\s+'</span>, <span class="string">''</span>, s)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">shop</span><span class="params">()</span>:</span></span><br><span class="line">    unicode2char = json.loads(open(<span class="string">'unicode2char.json'</span>, encoding=<span class="string">'utf-8'</span>).read())</span><br><span class="line">    html = open(<span class="string">'shop.html'</span>, encoding=<span class="string">'utf-8'</span>).read()</span><br><span class="line">    soup = BeautifulSoup(html, <span class="string">'lxml'</span>)</span><br><span class="line">    <span class="keyword">for</span> class_ <span class="keyword">in</span> unicode2char:</span><br><span class="line">        eles = soup.select(<span class="string">f'.<span class="subst">&#123;class_&#125;</span>'</span>)</span><br><span class="line">        <span class="keyword">for</span> e <span class="keyword">in</span> eles:</span><br><span class="line">            <span class="keyword">if</span> len(e[<span class="string">'class'</span>]) != <span class="number">1</span>:</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            text = <span class="string">''</span>.join(unicode2char[class_].get(<span class="string">'%x'</span> % ord(s)) <span class="keyword">or</span> s <span class="keyword">for</span> s <span class="keyword">in</span> e.text)</span><br><span class="line">            e.string.replace_with(text)</span><br><span class="line">    print(<span class="string">'shop_name:'</span>, trim(soup.select_one(<span class="string">'.shop-name'</span>).text.strip()))</span><br><span class="line">    print(<span class="string">'avg price:'</span>, trim(soup.select_one(<span class="string">'#avgPriceTitle'</span>).text.strip()))</span><br><span class="line">    print(<span class="string">'score:'</span>, trim(soup.select_one(<span class="string">'#comment_score .item'</span>).text.strip()))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">shop()</span><br><span class="line"><span class="comment"># 输出</span></span><br><span class="line"><span class="comment"># shop_name: 好运到咖啡士多手机扫码优惠买单</span></span><br><span class="line"><span class="comment"># avg price: 人均:43元</span></span><br><span class="line"><span class="comment"># score: 口味:8.2</span></span><br></pre></td></tr></table></figure>
+<h3 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">from</span> urllib <span class="keyword">import</span> parse</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> fontTools.ttLib <span class="keyword">import</span> TTFont</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">parse_css_font</span><span class="params">(css_url)</span>:</span></span><br><span class="line">    <span class="string">'''提取class和对应的字体文件'''</span></span><br><span class="line">    response = requests.get(css_url)</span><br><span class="line">    css_text = response.text</span><br><span class="line">    class_font = re.findall(<span class="string">r'@font.+?PingFangSC-Regular-(\w+).+?opentype"\),url\("//(.+?\.woff)'</span>, css_text)</span><br><span class="line">    <span class="keyword">return</span> class_font</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">download</span><span class="params">(url, file)</span>:</span></span><br><span class="line">    <span class="string">'''下载文件'''</span></span><br><span class="line">    response = requests.get(url)</span><br><span class="line">    <span class="keyword">with</span> open(file, <span class="string">'wb'</span>) <span class="keyword">as</span> f:</span><br><span class="line">        f.write(response.content)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_font_unicode</span><span class="params">(url)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> url.startswith(<span class="string">'http'</span>):</span><br><span class="line">        url = <span class="string">f'http://<span class="subst">&#123;url&#125;</span>'</span></span><br><span class="line">    font_file = parse.urlparse(url).path.split(<span class="string">'/'</span>)[<span class="number">-1</span>]</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(font_file):</span><br><span class="line">        download(url, font_file)</span><br><span class="line"></span><br><span class="line">    font = TTFont(font_file)</span><br><span class="line">    uu = font.getGlyphOrder()</span><br><span class="line">    <span class="keyword">return</span> [u[<span class="number">3</span>:] <span class="keyword">for</span> u <span class="keyword">in</span> uu <span class="keyword">if</span> u.startswith(<span class="string">'uni'</span>)]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_font_div</span><span class="params">(class_, font_url)</span>:</span></span><br><span class="line">    div_template = <span class="string">'&lt;div&gt;&#123;class_&#125;&lt;div class="&#123;class_&#125; "&gt;&#123;content&#125;&lt;/div&gt;&lt;/div&gt;'</span></span><br><span class="line">    unicode = get_font_unicode(font_url)</span><br><span class="line">    content = <span class="string">' '</span>.join(<span class="string">f'<span class="subst">&#123;u&#125;</span>:&amp;#x<span class="subst">&#123;u&#125;</span>;'</span> <span class="keyword">for</span> u <span class="keyword">in</span> unicode)</span><br><span class="line">    <span class="comment"># content = ' '.join(f'&amp;#x&#123;u&#125;;' for u in unicode)</span></span><br><span class="line">    div = div_template.format(class_=class_, content=content)</span><br><span class="line">    <span class="keyword">return</span> div</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">render_html</span><span class="params">(css_url)</span>:</span></span><br><span class="line">    template = <span class="string">'''</span></span><br><span class="line"><span class="string">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="string">&lt;html lang="zh"&gt;</span></span><br><span class="line"><span class="string">&lt;head&gt;</span></span><br><span class="line"><span class="string">    &lt;meta charset="UTF-8"&gt;</span></span><br><span class="line"><span class="string">    &lt;title&gt;Title&lt;/title&gt;</span></span><br><span class="line"><span class="string">    &lt;link rel="stylesheet" type="text/css" href="&#123;css_url&#125;"&gt;</span></span><br><span class="line"><span class="string">&lt;/head&gt;</span></span><br><span class="line"><span class="string">&lt;body style="word-wrap: break-word"&gt;</span></span><br><span class="line"><span class="string">    &#123;body&#125;</span></span><br><span class="line"><span class="string">&lt;/body&gt;</span></span><br><span class="line"><span class="string">&lt;/html&gt;</span></span><br><span class="line"><span class="string">    '''</span></span><br><span class="line">    class_font = parse_css_font(css_url)</span><br><span class="line">    body = <span class="string">''</span></span><br><span class="line">    <span class="keyword">for</span> class_, font_url <span class="keyword">in</span> class_font:</span><br><span class="line">        div = get_font_div(class_, font_url)</span><br><span class="line">        body = body + <span class="string">'\n'</span> + div</span><br><span class="line"></span><br><span class="line">    html = template.format(css_url=css_url, body=body)</span><br><span class="line">    wf = open(<span class="string">'font.html'</span>, <span class="string">'w'</span>, encoding=<span class="string">'utf-8'</span>)</span><br><span class="line">    wf.write(html)</span><br><span class="line">    wf.close()</span><br><span class="line">    print(html)</span><br><span class="line">    <span class="keyword">return</span> html</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">trim</span><span class="params">(s)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> re.sub(<span class="string">'\s+'</span>, <span class="string">''</span>, s)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">shop</span><span class="params">()</span>:</span></span><br><span class="line">    unicode2char = json.loads(open(<span class="string">'unicode2char.json'</span>, encoding=<span class="string">'utf-8'</span>).read())</span><br><span class="line">    html = open(<span class="string">'shop.html'</span>, encoding=<span class="string">'utf-8'</span>).read()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 遍历替换渲染后的字符</span></span><br><span class="line">    soup = BeautifulSoup(html, <span class="string">'lxml'</span>)</span><br><span class="line">    <span class="keyword">for</span> class_ <span class="keyword">in</span> unicode2char:</span><br><span class="line">        eles = soup.select(<span class="string">f'.<span class="subst">&#123;class_&#125;</span>'</span>)</span><br><span class="line">        <span class="keyword">for</span> e <span class="keyword">in</span> eles:</span><br><span class="line">            <span class="keyword">if</span> len(e[<span class="string">'class'</span>]) != <span class="number">1</span>:</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            text = <span class="string">''</span>.join(unicode2char[class_].get(<span class="string">'%x'</span> % ord(s)) <span class="keyword">or</span> s <span class="keyword">for</span> s <span class="keyword">in</span> e.text)</span><br><span class="line">            e.string.replace_with(text)</span><br><span class="line"></span><br><span class="line">    print(<span class="string">'shop_name:'</span>, trim(soup.select_one(<span class="string">'.shop-name'</span>).text.strip()))</span><br><span class="line">    print(<span class="string">'avg price:'</span>, trim(soup.select_one(<span class="string">'#avgPriceTitle'</span>).text.strip()))</span><br><span class="line">    print(<span class="string">'score:'</span>, trim(soup.select_one(<span class="string">'#comment_score .item'</span>).text.strip()))</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/04/16/live-app-api-crypto-analisy/" rel="next" title="某se情直播App Api接口加解密分析">
+                <i class="fa fa-chevron-left"></i> 某se情直播App Api接口加解密分析
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/ali.png" alt="xiaoq">
+            
+              <p class="site-author-name" itemprop="name">xiaoq</p>
+              <p class="site-description motion-element" itemprop="description">人生苦短，我用Python！</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#前端分析-CSS字体加密"><span class="nav-number">2.</span> <span class="nav-text">前端分析 CSS字体加密</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#逆向还原"><span class="nav-number">3.</span> <span class="nav-text">逆向还原</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#提取class和其对于的字体文件"><span class="nav-number">3.1.</span> <span class="nav-text">提取class和其对于的字体文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#提取字体文件包含的所有Unicode编码"><span class="nav-number">3.2.</span> <span class="nav-text">提取字体文件包含的所有Unicode编码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#建立Unicode与字体样式绑定网页"><span class="nav-number">3.3.</span> <span class="nav-text">建立Unicode与字体样式绑定网页</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#识图，建立映射"><span class="nav-number">3.4.</span> <span class="nav-text">识图，建立映射</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解析网页转换字符"><span class="nav-number">4.</span> <span class="nav-text">解析网页转换字符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#完整代码"><span class="nav-number">5.</span> <span class="nav-text">完整代码</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xiaoq</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

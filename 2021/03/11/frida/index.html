@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="android,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="背景在分析s*情App时，在Xposed自吐算法模块帮助下，绝大多数的App都走了常规调用JavaSdk的路子，所以加解密都可以通过自吐算法分析得到。但总有不按套路出牌的App，解包后分析发现其签名算法是放在so库中的，Xposed对so库是鞭长莫及了，所以本着好奇心试着使用Frida去hook so逻辑解密签名算法。 环境安装Frida使用C/S模式，Server运行在手机上，Client有Py">
+<meta name="keywords" content="android">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Frida hook 安卓Java和so记录">
+<meta property="og:url" content="http://xiaoq1024.github.io/2021/03/11/frida/index.html">
+<meta property="og:site_name" content="xiaoq.py">
+<meta property="og:description" content="背景在分析s*情App时，在Xposed自吐算法模块帮助下，绝大多数的App都走了常规调用JavaSdk的路子，所以加解密都可以通过自吐算法分析得到。但总有不按套路出牌的App，解包后分析发现其签名算法是放在so库中的，Xposed对so库是鞭长莫及了，所以本着好奇心试着使用Frida去hook so逻辑解密签名算法。 环境安装Frida使用C/S模式，Server运行在手机上，Client有Py">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2021-04-25T10:13:16.521Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Frida hook 安卓Java和so记录">
+<meta name="twitter:description" content="背景在分析s*情App时，在Xposed自吐算法模块帮助下，绝大多数的App都走了常规调用JavaSdk的路子，所以加解密都可以通过自吐算法分析得到。但总有不按套路出牌的App，解包后分析发现其签名算法是放在so库中的，Xposed对so库是鞭长莫及了，所以本着好奇心试着使用Frida去hook so逻辑解密签名算法。 环境安装Frida使用C/S模式，Server运行在手机上，Client有Py">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://xiaoq1024.github.io/2021/03/11/frida/">
+
+
+
+
+
+  <title>Frida hook 安卓Java和so记录 | xiaoq.py</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">xiaoq.py</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Keep learning</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://xiaoq1024.github.io/2021/03/11/frida/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xiaoq">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/ali.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xiaoq.py">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Frida hook 安卓Java和so记录</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-03-11T10:32:41+08:00">
+                2021-03-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/note/" itemprop="url" rel="index">
+                    <span itemprop="name">note</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>在分析s*情App时，在Xposed自吐算法模块帮助下，绝大多数的App都走了常规调用JavaSdk的路子，所以加解密都可以通过自吐算法分析得到。但总有不按套路出牌的App，解包后分析发现其签名算法是放在so库中的，Xposed对so库是鞭长莫及了，所以本着好奇心试着使用Frida去hook so逻辑解密签名算法。</p>
+<h3 id="环境安装"><a href="#环境安装" class="headerlink" title="环境安装"></a>环境安装</h3><p>Frida使用C/S模式，Server运行在手机上，Client有Python的实现。</p>
+<h4 id="Android环境"><a href="#Android环境" class="headerlink" title="Android环境"></a>Android环境</h4><ol>
+<li>下载 <a href="https://github.com/frida/frida/releases/download/14.2.13/frida-server-14.2.13-android-arm64.xz" target="_blank" rel="noopener">frida-server-14.2.13-android-arm64.xz</a></li>
+<li>解压得到<code>frida-server-14.2.13-android-arm64</code></li>
+<li>push 到手机，添加权限运行</li>
+</ol>
+<a id="more"></a>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"># 个人习惯，使用更短的</span><br><span class="line">&#123; frida &#125; $ mv frida-server-14.2.13-android-arm64 fs  fs</span><br><span class="line"></span><br><span class="line"># 不能直接pull到/data/local/tmp</span><br><span class="line">&#123; frida &#125; $ adb push fs //data/local/tmp  下</span><br><span class="line">adb: error: failed to copy &apos;fs&apos; to &apos;//data/local/tmp/fs&apos;: remote fchown failed: Operation not permitted</span><br><span class="line">fs: 1 file pushed, 0 skipped. 28.9 MB/s (41358640 bytes in 1.363s)</span><br><span class="line"></span><br><span class="line"># 先pull到sdcard</span><br><span class="line">&#123; frida &#125; $ adb push fs //sdcard/</span><br><span class="line">fs: 1 file pushed, 0 skipped. 28.6 MB/s (41358640 bytes in 1.378s)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123; frida &#125; $ adb shell</span><br><span class="line">platina:/ $ su</span><br><span class="line">platina:/ # cd /data/local/tmp</span><br><span class="line">1|platina:/data/local/tmp # mv /sdcard/fs .</span><br><span class="line"></span><br><span class="line"># 添加执行权限</span><br><span class="line">platina:/data/local/tmp # chmod u+x fs</span><br><span class="line">platina:/data/local/tmp # ls -l</span><br><span class="line">-rwxrw---- 1 root sdcard_rw 41358640  fs</span><br><span class="line"></span><br><span class="line"># 会阻塞运行，默认无日志输出</span><br><span class="line">platina:/data/local/tmp # ./fs</span><br><span class="line"></span><br><span class="line"># 另起终端，发现监听在端口27042</span><br><span class="line">platina:/ # netstat -antp</span><br><span class="line">Active Internet connections (established and servers)</span><br><span class="line">Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program Name</span><br><span class="line">tcp        0      0 127.0.0.1:27042         0.0.0.0:*               LISTEN      25112/fs</span><br></pre></td></tr></table></figure>
+<h4 id="PC环境"><a href="#PC环境" class="headerlink" title="PC环境"></a>PC环境</h4><ol>
+<li>安装依赖 <code>pip install frida</code></li>
+<li><p>查看安装的相关命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123; frida &#125; $ which frida</span><br><span class="line">/c/Program Files/Python38/Scripts/frida</span><br><span class="line"></span><br><span class="line">&#123; frida &#125; $ cd &apos;/c/Program Files/Python38/Scripts/&apos;</span><br><span class="line"></span><br><span class="line">&#123; frida &#125; $ ls frida*.exe</span><br><span class="line">frida.exe*  frida-discover.exe*  frida-kill.exe*  frida-ls-devices.exe*  frida-ps.exe*  frida-trace.exe*</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>usb连接手机，运行<code>frida-ps -Ua</code>，成功列出进程列表</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">成功列出进程，fs环境搭建成功</span><br><span class="line">&#123; frida &#125; $ frida-ps -Ua</span><br><span class="line">  PID  Name                       Identifier</span><br><span class="line">-----  -------------------------  ---------------------------------------</span><br><span class="line"> 7886  AI虚拟助手                     com.xiaomi.aiasst.service</span><br><span class="line">23722  AiasstVision               com.xiaomi.aiasst.vision</span><br><span class="line">23394  Analytics                  com.miui.analytics</span><br><span class="line"> 1924  Android 系统                 android</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="逆向分析某App接口"><a href="#逆向分析某App接口" class="headerlink" title="逆向分析某App接口"></a>逆向分析某App接口</h3><h4 id="抓包"><a href="#抓包" class="headerlink" title="抓包"></a>抓包</h4><p>请求参数<code>ncode</code>一眼下去就知道大概是md5签名了，经xposed自吐算法分析后发现没有调用标准库的md5。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">os	1</span><br><span class="line">reqtime	16193xxxxx</span><br><span class="line">ncode	747FACB5F308FABEDFA78267357C3C6F</span><br><span class="line">imei	3c4ac0d4ac1f6d64f6b15700d7113740</span><br><span class="line">actType	1</span><br><span class="line">shuMeiDeviceId	20210409102648d9ad3d90a2ce6e65452d15d3xx</span><br><span class="line">token	dJKobeXH024iWvb8xxUQ==</span><br><span class="line">uid	75725xx</span><br></pre></td></tr></table></figure></p>
+<h4 id="解开App，定位到签名代码"><a href="#解开App，定位到签名代码" class="headerlink" title="解开App，定位到签名代码"></a>解开App，定位到签名代码</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// 签名算法</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">k</span><span class="params">(String arg4)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> TextUtils.isEmpty(arg4) ? <span class="keyword">null</span> : Encrypt.getInstance().makeKey(NineShowApplication.F, arg4, <span class="string">""</span>, <span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// native方法，实现在so中</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">native</span> String <span class="title">makeKey</span><span class="params">(Context arg1, String arg2, String arg3, <span class="keyword">int</span> arg4)</span> </span>&#123;&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Frida-hook-Java"><a href="#Frida-hook-Java" class="headerlink" title="Frida hook Java"></a>Frida hook Java</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> frida</span><br><span class="line"></span><br><span class="line">js_source = <span class="string">'''</span></span><br><span class="line"><span class="string">Java.perform(function () &#123;</span></span><br><span class="line"><span class="string">    var clazz = Java.use('com.ninexiu.sixninexiu.common.util.g6');</span></span><br><span class="line"><span class="string">    clazz.k.overload('java.lang.String').implementation  = function () &#123;</span></span><br><span class="line"><span class="string">        console.log('fun.k args:', arguments[0]);</span></span><br><span class="line"><span class="string">        var result = this.k.overload('java.lang.String').apply(this, arguments);</span></span><br><span class="line"><span class="string">        console.log('fun.k return:', result);</span></span><br><span class="line"><span class="string">        return result;</span></span><br><span class="line"><span class="string">   &#125;</span></span><br><span class="line"><span class="string">&#125;);</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    pkg = <span class="string">'com.nin**.**u'</span>  <span class="comment"># package name</span></span><br><span class="line">    process = frida.get_usb_device().attach(pkg)  <span class="comment"># attach process</span></span><br><span class="line">    script = process.create_script(js_source)  <span class="comment"># load js</span></span><br><span class="line">    script.load()</span><br><span class="line">    sys.stdin.read()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 成功hook，得到输出</span></span><br><span class="line"><span class="comment"># fun.k args: dJKobeXH024iWvb8DI0u8pdF/enBl43vA9kGNqzfY29PTm2b0jmIivjasJQ2p=jia=iKcXLOdcxP95MYhiiLh5/Hhr6qsIGI/45XmiZTkCLNY89ZSx/0jbQ/UQ==3c4ac0d4ac1f6d64f6b15700d71137401161934****</span></span><br><span class="line"><span class="comment"># fun.k return: 4BFACC38B1FC9984B94DD293A4B0C323</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 由此可以得到输入参数为: token + imei +  '1' + timestamp，且对该输入进行MD5进算不等于hook返回值</span></span><br></pre></td></tr></table></figure>
+<h3 id="Frida-hook-so"><a href="#Frida-hook-so" class="headerlink" title="Frida hook so"></a>Frida hook so</h3><p>将so拖入IDA，方法使用了静态注册，直接找到<code>Java_com_lib_player_Encrypt_makeKey</code>，分析后得知其主要逻辑在<code>md5_(input, len, output);</code>函数中，<code>makeKey</code>对原始输入进行了两次<code>md5_</code>。<br>由于方法<code>md5_</code>在export中可以找到，所以可以直接在Frida中hook。</p>
+<p>完整代码<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> frida</span><br><span class="line"></span><br><span class="line">js_source = <span class="string">'''</span></span><br><span class="line"><span class="string">// hook java</span></span><br><span class="line"><span class="string">Java.perform(function () &#123;</span></span><br><span class="line"><span class="string">    var clazz = Java.use('com.ninexiu.sixninexiu.common.util.g6');</span></span><br><span class="line"><span class="string">    clazz.k.overload('java.lang.String').implementation  = function () &#123;</span></span><br><span class="line"><span class="string">        console.log('fun.k args:', arguments[0]);</span></span><br><span class="line"><span class="string">        var result = this.k.overload('java.lang.String').apply(this, arguments);</span></span><br><span class="line"><span class="string">        console.log('fun.k return:', result);</span></span><br><span class="line"><span class="string">        return result;</span></span><br><span class="line"><span class="string">   &#125;</span></span><br><span class="line"><span class="string">&#125;);</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">function bytes2hex(byte_prt, length)&#123;</span></span><br><span class="line"><span class="string">        var result_ptr = new NativePointer(byte_prt);</span></span><br><span class="line"><span class="string">        var buffer = Memory.readByteArray(result_ptr, length);</span></span><br><span class="line"><span class="string">        var int8arr = new Uint8Array(buffer);</span></span><br><span class="line"><span class="string">        var result_str = "";</span></span><br><span class="line"><span class="string">        for(var i=0; i&lt;int8arr.length; i++)&#123;</span></span><br><span class="line"><span class="string">            result_str = result_str + Number(int8arr[i]).toString(16);</span></span><br><span class="line"><span class="string">        &#125;</span></span><br><span class="line"><span class="string">        return result_str;</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">// hook so</span></span><br><span class="line"><span class="string">var md5_output;</span></span><br><span class="line"><span class="string">Interceptor.attach(Module.getExportByName('libencrypt.so', 'md5_'), &#123;</span></span><br><span class="line"><span class="string">    onEnter: function(args) &#123;</span></span><br><span class="line"><span class="string">        md5_output = args[2].toInt32();</span></span><br><span class="line"><span class="string">        console.log('md5 args[0]:', Memory.readCString(args[0]), 'args[1]:', args[1]);</span></span><br><span class="line"><span class="string">    &#125;,</span></span><br><span class="line"><span class="string">    onLeave: function(retval) &#123;</span></span><br><span class="line"><span class="string">        // md5的计算结果是写入到函数调用时的参数buffer中，并不是通过return</span></span><br><span class="line"><span class="string">        // 所以这里需要把函数调用时第一个保存结果都参数输出</span></span><br><span class="line"><span class="string">        var ss = bytes2hex(md5_output, 16);</span></span><br><span class="line"><span class="string">        console.log('md5 result:', ss);</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">&#125;);</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    pkg = <span class="string">'com.nin**.**u'</span>  <span class="comment"># package name</span></span><br><span class="line">    process = frida.get_usb_device().attach(pkg)  <span class="comment"># attach process</span></span><br><span class="line">    script = process.create_script(js_source)  <span class="comment"># load js</span></span><br><span class="line">    script.load()</span><br><span class="line">    sys.stdin.read()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 得到输出</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string"># java_args= token + imei +  '1' + timestamp</span></span><br><span class="line"><span class="string">fun.k args: dJKobeX...4f6b15700d7113740...0..68</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"># so的md5输入为 md5_args1 = 'sdfnrtpmsldyncsd' + java_args</span></span><br><span class="line"><span class="string">md5 args[0]: lsdfnrtpmsldyncsdJKobeX....68 args[1]: 0xba</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"># md5_result1 为标准md5输出</span></span><br><span class="line"><span class="string">md5 result: 4fb722f2f95f59ac6e4ad7c4b325c80</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"># 第二次的此处只取前20(0x14)个字符 md5_args2 = md5_result1[:10] + md5_result1[-10:]</span></span><br><span class="line"><span class="string">md5 args[0]: 4FB722F2F97C4B325C804FB722F2F905F59AC6E4AD7C4B325C80 args[1]: 0x14</span></span><br><span class="line"><span class="string">md5 result: 16e8d83b2f8441c28322f13d1cedce</span></span><br><span class="line"><span class="string">fun.k return: 16E8D83B2F8441C283220F13D10CEDCE</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/android/" rel="tag"># android</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/02/22/android-https/" rel="next" title="安卓App https抓包二三事">
+                <i class="fa fa-chevron-left"></i> 安卓App https抓包二三事
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2021/03/24/m3u8-downloader/" rel="prev" title="视频常见格式之m3u8下载">
+                视频常见格式之m3u8下载 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/ali.png" alt="xiaoq">
+            
+              <p class="site-author-name" itemprop="name">xiaoq</p>
+              <p class="site-description motion-element" itemprop="description">人生苦短，我用Python！</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#环境安装"><span class="nav-number">2.</span> <span class="nav-text">环境安装</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Android环境"><span class="nav-number">2.1.</span> <span class="nav-text">Android环境</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PC环境"><span class="nav-number">2.2.</span> <span class="nav-text">PC环境</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#逆向分析某App接口"><span class="nav-number">3.</span> <span class="nav-text">逆向分析某App接口</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#抓包"><span class="nav-number">3.1.</span> <span class="nav-text">抓包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解开App，定位到签名代码"><span class="nav-number">3.2.</span> <span class="nav-text">解开App，定位到签名代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Frida-hook-Java"><span class="nav-number">4.</span> <span class="nav-text">Frida hook Java</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Frida-hook-so"><span class="nav-number">5.</span> <span class="nav-text">Frida hook so</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xiaoq</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

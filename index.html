@@ -232,12 +232,12 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://xiaoq1024.github.io/2021/04/22/live-app-api-crypto-analisy/">
+    <link itemprop="mainEntityOfPage" href="http://xiaoq1024.github.io/2021/04/20/reverse-css-font-anti/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="xiaoq">
       <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/ali.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -251,7 +251,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2021/04/22/live-app-api-crypto-analisy/" itemprop="url">某se情直播App Api接口加解密分析</a></h1>
+                <a class="post-title-link" href="/2021/04/20/reverse-css-font-anti/" itemprop="url">逆向分析某评CSS字体反爬</a></h1>
         
 
         <div class="post-meta">
@@ -263,8 +263,156 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-04-22T15:30:21+08:00">
-                2021-04-22
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-04-20T10:32:42+08:00">
+                2021-04-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/spider/" itemprop="url" rel="index">
+                    <span itemprop="name">spider</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在前东家的时候获取过一部分某评的POI数据，那时第一次遇到自定义CSS字体反爬这种骚操作给我留下很深的印象，近期又有需求需要获取当前城市一部分POI数据。故地重游，相同的套路，不过随着经验的增长，不再需要当初一个个字体逆向记录了，今日把该分析过程记录一下。</p>
+<h3 id="前端分析-CSS字体加密"><a href="#前端分析-CSS字体加密" class="headerlink" title="前端分析 CSS字体加密"></a>前端分析 CSS字体加密</h3><p>调出Chrome开发者工具，审核元素，发现部分信息的通过自定义css字体样式来实现加密的，从源码中可以看到每个字体都有一个编号，浏览器会根据该编号去网站指定的字体文件中选择对应的字符画出。</p>
+<p><img src="/images/css_font_anti/front_end.png" alt></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2021/04/20/reverse-css-font-anti/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://xiaoq1024.github.io/2021/04/16/live-app-api-crypto-analisy/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xiaoq">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/ali.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xiaoq.py">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/04/16/live-app-api-crypto-analisy/" itemprop="url">某se情直播App Api接口加解密分析</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-04-16T15:30:21+08:00">
+                2021-04-16
               </time>
             
 
@@ -327,7 +475,7 @@
           <h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>在移动互联网时代，se情行业自然没有落下直播这个风口，为了防止被执法，api服务器往往部署在国外，但是为了提升用户体验，静态资源、直播视频流等往往选择接入国内云厂商以提升访问速度。<br>当然云厂商可以直接对资源进行审核，但有时候资源是加密的，而且为了证据链完整，从app的源头上分析就显得很有必要了。<br>逆向分析这些非法的app接口，提取出其使用到的服务及域名，保存事例资源，为安全及内容审核团队提供决策依据。</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2021/04/22/live-app-api-crypto-analisy/#more" rel="contents">
+            <a class="btn" href="/2021/04/16/live-app-api-crypto-analisy/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -383,7 +531,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="xiaoq">
       <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/ali.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -530,7 +678,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="xiaoq">
       <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/ali.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -679,12 +827,164 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://xiaoq1024.github.io/2021/03/11/frida/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xiaoq">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/ali.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xiaoq.py">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/03/11/frida/" itemprop="url">Frida hook 安卓Java和so记录</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-03-11T10:32:41+08:00">
+                2021-03-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/note/" itemprop="url" rel="index">
+                    <span itemprop="name">note</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>在分析s*情App时，在Xposed自吐算法模块帮助下，绝大多数的App都走了常规调用JavaSdk的路子，所以加解密都可以通过自吐算法分析得到。但总有不按套路出牌的App，解包后分析发现其签名算法是放在so库中的，Xposed对so库是鞭长莫及了，所以本着好奇心试着使用Frida去hook so逻辑解密签名算法。</p>
+<h3 id="环境安装"><a href="#环境安装" class="headerlink" title="环境安装"></a>环境安装</h3><p>Frida使用C/S模式，Server运行在手机上，Client有Python的实现。</p>
+<h4 id="Android环境"><a href="#Android环境" class="headerlink" title="Android环境"></a>Android环境</h4><ol>
+<li>下载 <a href="https://github.com/frida/frida/releases/download/14.2.13/frida-server-14.2.13-android-arm64.xz" target="_blank" rel="noopener">frida-server-14.2.13-android-arm64.xz</a></li>
+<li>解压得到<code>frida-server-14.2.13-android-arm64</code></li>
+<li>push 到手机，添加权限运行</li>
+</ol>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2021/03/11/frida/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://xiaoq1024.github.io/2021/02/22/android-https/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="xiaoq">
       <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/ali.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -809,7 +1109,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="xiaoq">
       <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/ali.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -954,12 +1254,358 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://xiaoq1024.github.io/2020/12/06/html2pdf/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xiaoq">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/ali.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xiaoq.py">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/12/06/html2pdf/" itemprop="url">使用pyppeteer将网页保存为pdf</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-12-06T15:16:24+08:00">
+                2020-12-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/spider/" itemprop="url" rel="index">
+                    <span itemprop="name">spider</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在慕课网上买了专栏，打算将其打包成附上目录的pdf文件，放到平板中阅读，抓包拿到文章的内容，组装成完成的html后使用pyppeteer调用Chrome渲染输出pdf文件。</p>
+<h3 id="安装pyppeteer"><a href="#安装pyppeteer" class="headerlink" title="安装pyppeteer"></a>安装pyppeteer</h3><p><a href="https://github.com/puppeteer/puppeteer" target="_blank" rel="noopener">puppeteer</a>是谷歌推出的基于nodejs操作Chrome一个工具，其使用了异步的API操作，而且支持一个Chrome实例并发操作多个页面，而且不需要像selenium安装driver。</p>
+<p><a href="https://github.com/pyppeteer/pyppeteer" target="_blank" rel="noopener">pyppeteer</a>是puppeteer的非官方Python实现，由于其使用了异步API，</p>
+<p><a href="https://tesseract-ocr.github.io/tessdoc/Downloads.html" target="_blank" rel="noopener">官网下载文档</a>提供的<a href="https://sourceforge.net/projects/tesseract-ocr-alt/files/" target="_blank" rel="noopener">下载地址</a>只提供了3.x版本的，这里使用<a href="https://digi.bib.uni-mannheim.de/tesseract/" target="_blank" rel="noopener">三方编译</a>的4.x版本。</p>
+<ul>
+<li>选择下载<code>tesseract-ocr-w64-setup-v4.1.0.20190314.exe</code></li>
+<li>下载完成后安装</li>
+<li><p>目录结构</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#123; Tesseract-OCR &#125; $ tree -L 2</span><br><span class="line">|-- tessdata  // 语言训练集</span><br><span class="line">|   |-- configs</span><br><span class="line">|   |-- eng.traineddata // 英文训练集</span><br><span class="line">|   |-- eng.user-patterns</span><br><span class="line">|   |-- eng.user-words</span><br><span class="line">|   |-- osd.traineddata</span><br><span class="line">|   |-- pdf.ttf</span><br><span class="line">|   |-- script</span><br><span class="line">|   `-- tessconfigs</span><br><span class="line">|-- tesseract.exe  // 主程序</span><br><span class="line">|-- text2image.exe</span><br><span class="line">|-- unicharset_extractor.exe</span><br><span class="line">|-- wordlist2dawg.exe</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>测试最简单验证码<br><img src="/images/tesseract_ocr/kktp.gif" alt></p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 调用识别简单验证码</span></span><br><span class="line"><span class="comment"># tesseract imgfile outputfile(stdout可直接输出)</span></span><br><span class="line">&#123; Tesseract-OCR &#125; $ ./tesseract kktp.gif stdout</span><br><span class="line">Warning: Invalid resolution 0 dpi. Using 70 instead.</span><br><span class="line">Estimating resolution as 134</span><br><span class="line"></span><br><span class="line">KKTP</span><br></pre></td></tr></table></figure>
+<h3 id="安装Python调用ocr环境"><a href="#安装Python调用ocr环境" class="headerlink" title="安装Python调用ocr环境"></a>安装Python调用ocr环境</h3><p>这里需要安装两个库：<code>pillow</code>用作图片处理的， <code>pytesseract</code>对TesseractOCR进行了一层封装，可直接在Python中调用识别，但依旧是需要依赖TesseractOCR环境的。</p>
+<ul>
+<li><code>pip install pillow pytesseract</code></li>
+<li>调用识别<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">from</span> pytesseract <span class="keyword">import</span> pytesseract</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">img2str</span><span class="params">(file)</span>:</span></span><br><span class="line">    img = Image.open(file)</span><br><span class="line">    <span class="comment"># 指向tesseract安装路径，如果配置到PATH中则可以省略</span></span><br><span class="line">    pytesseract.tesseract_cmd = <span class="string">r'D:\Tesseract-OCR\tesseract.exe'</span></span><br><span class="line">    s = pytesseract.image_to_string(img)</span><br><span class="line">    <span class="keyword">return</span> s.strip()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    s = img2str(<span class="string">'kktp.gif'</span>)</span><br><span class="line">    print(s)  <span class="comment"># 成功输出 KKTP</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="实践某网站验证码"><a href="#实践某网站验证码" class="headerlink" title="实践某网站验证码"></a>实践某网站验证码</h3><p>由于该网站的验证码图片背景有噪音，不能直接识别，需要对背景噪音进行处理。</p>
+<ul>
+<li><p>将图片转为灰度图片，去除色彩（该列子中原始图片就是灰度图片，效果不大）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">img: Image.Image = Image.open(file)</span><br><span class="line">img = img.convert(<span class="string">'L'</span>)</span><br><span class="line">img.save(<span class="string">'gray.jpg'</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>对图片进行二值化处理</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">binary_img</span><span class="params">(img, threshold)</span>:</span></span><br><span class="line">    px = img.load()</span><br><span class="line">    w, h = img.size</span><br><span class="line">    <span class="keyword">for</span> x <span class="keyword">in</span> range(w):</span><br><span class="line">        <span class="keyword">for</span> y <span class="keyword">in</span> range(h):</span><br><span class="line">            p = <span class="number">0</span> <span class="keyword">if</span> px[x, y] &lt; threshold <span class="keyword">else</span> <span class="number">255</span></span><br><span class="line">            px[x, y] = p</span><br><span class="line">    <span class="keyword">return</span> img</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>去除孤立点的噪音</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">connect</span><span class="params">(x, y, img, threshold)</span>:</span></span><br><span class="line">    <span class="string">'''查看点(x,y)上下左右有多少个点与其相连'''</span></span><br><span class="line">    w, h = img.size</span><br><span class="line">    px = img.load()</span><br><span class="line">    direction = [(x - <span class="number">1</span>, y), (x + <span class="number">1</span>, y), (x, y - <span class="number">1</span>), (x, y + <span class="number">1</span>)]</span><br><span class="line">    <span class="keyword">return</span> sum(px[x, y] &lt; threshold <span class="keyword">for</span> x, y <span class="keyword">in</span> direction <span class="keyword">if</span> x &lt; w <span class="keyword">and</span> y &lt; h)</span><br><span class="line"></span><br><span class="line"><span class="comment"># ...</span></span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> range(img.width):</span><br><span class="line">    <span class="keyword">for</span> y <span class="keyword">in</span> range(img.height):</span><br><span class="line">        <span class="keyword">if</span> px[x, y] &lt; threshold:</span><br><span class="line">            c = connect(x, y, img, threshold)</span><br><span class="line">            <span class="keyword">if</span> c == <span class="number">0</span>:  <span class="comment"># 无相连点则视为孤立的噪音点</span></span><br><span class="line">                px[x, y] = <span class="number">255</span></span><br><span class="line"><span class="comment"># ...</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>以下为处理图片的结果，以此为原图、灰度、二值化、去噪音<br><img src="/images/tesseract_ocr/src.jpg" alt><br><img src="/images/tesseract_ocr/gray.jpg" alt><br><img src="/images/tesseract_ocr/bin.jpg" alt><br><img src="/images/tesseract_ocr/result.jpg" alt></p>
+<h4 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">from</span> pytesseract <span class="keyword">import</span> pytesseract</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">binary_img</span><span class="params">(img, threshold)</span>:</span></span><br><span class="line">    px = img.load()</span><br><span class="line">    w, h = img.size</span><br><span class="line">    <span class="keyword">for</span> x <span class="keyword">in</span> range(w):</span><br><span class="line">        <span class="keyword">for</span> y <span class="keyword">in</span> range(h):</span><br><span class="line">            p = <span class="number">0</span> <span class="keyword">if</span> px[x, y] &lt; threshold <span class="keyword">else</span> <span class="number">255</span></span><br><span class="line">            px[x, y] = p</span><br><span class="line">    <span class="keyword">return</span> img</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">connect</span><span class="params">(x, y, img, threshold)</span>:</span></span><br><span class="line">    <span class="string">'''查看点(x,y)上下左右有多少个点与其相连'''</span></span><br><span class="line">    w, h = img.size</span><br><span class="line">    px = img.load()</span><br><span class="line">    direction = [(x - <span class="number">1</span>, y), (x + <span class="number">1</span>, y), (x, y - <span class="number">1</span>), (x, y + <span class="number">1</span>)]</span><br><span class="line">    <span class="keyword">return</span> sum(px[x, y] &lt; threshold <span class="keyword">for</span> x, y <span class="keyword">in</span> direction <span class="keyword">if</span> x &lt; w <span class="keyword">and</span> y &lt; h)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">handle_img</span><span class="params">(file, threshold)</span>:</span></span><br><span class="line">    img: Image.Image = Image.open(file)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 灰度</span></span><br><span class="line">    img = img.convert(<span class="string">'L'</span>)</span><br><span class="line">    img.save(<span class="string">'gray.jpg'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 二值化</span></span><br><span class="line">    img = binary_img(img, threshold)</span><br><span class="line">    img.save(<span class="string">'bin.jpg'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 去背景噪音</span></span><br><span class="line">    px = img.load()</span><br><span class="line">    <span class="keyword">for</span> x <span class="keyword">in</span> range(img.width):</span><br><span class="line">        <span class="keyword">for</span> y <span class="keyword">in</span> range(img.height):</span><br><span class="line">            <span class="keyword">if</span> px[x, y] &lt; threshold:</span><br><span class="line">                c = connect(x, y, img, threshold)</span><br><span class="line">                <span class="keyword">if</span> c == <span class="number">0</span>:  <span class="comment"># 无相连点则视为孤立的噪音点</span></span><br><span class="line">                    px[x, y] = <span class="number">255</span></span><br><span class="line">    img.save(<span class="string">'result.jpg'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">img2str</span><span class="params">(file)</span>:</span></span><br><span class="line">    img = Image.open(file)</span><br><span class="line">    pytesseract.tesseract_cmd = <span class="string">r'D:\Tesseract-OCR\tesseract.exe'</span></span><br><span class="line">    s = pytesseract.image_to_string(img)</span><br><span class="line">    <span class="keyword">return</span> s.strip()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    handle_img(<span class="string">'src.jpg'</span>, <span class="number">80</span>)</span><br><span class="line">    s = img2str(<span class="string">'result.jpg'</span>)</span><br><span class="line">    print(s)</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://xiaoq1024.github.io/2020/12/06/tesseract_ocr-in-python/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xiaoq">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/ali.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xiaoq.py">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/12/06/tesseract_ocr-in-python/" itemprop="url">在Python使用TesseractOCR识别验证码</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-12-06T15:16:24+08:00">
+                2020-12-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/spider/" itemprop="url" rel="index">
+                    <span itemprop="name">spider</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>验证码作为鉴别人机的一种有效手段，会经常出现在网站的各种检测或风控中，尤其是一些关键的接口比如登录注册。<br>现在常见的解决验证码的方案有：接入打码平台、深度学习、ocr识别。对于简单的数字字母验证码、使用ocr既节省了加入打码平台的费用，同时也没有引入技术复杂度高的深度学习。</p>
+<h3 id="安装TesseractOCR"><a href="#安装TesseractOCR" class="headerlink" title="安装TesseractOCR"></a>安装TesseractOCR</h3><p><a href="https://tesseract-ocr.github.io/tessdoc/Downloads.html" target="_blank" rel="noopener">官网下载文档</a>提供的<a href="https://sourceforge.net/projects/tesseract-ocr-alt/files/" target="_blank" rel="noopener">下载地址</a>只提供了3.x版本的，这里使用<a href="https://digi.bib.uni-mannheim.de/tesseract/" target="_blank" rel="noopener">三方编译</a>的4.x版本。</p>
+<ul>
+<li>选择下载<code>tesseract-ocr-w64-setup-v4.1.0.20190314.exe</code></li>
+<li>下载完成后安装</li>
+<li><p>目录结构</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#123; Tesseract-OCR &#125; $ tree -L 2</span><br><span class="line">|-- tessdata  // 语言训练集</span><br><span class="line">|   |-- configs</span><br><span class="line">|   |-- eng.traineddata // 英文训练集</span><br><span class="line">|   |-- eng.user-patterns</span><br><span class="line">|   |-- eng.user-words</span><br><span class="line">|   |-- osd.traineddata</span><br><span class="line">|   |-- pdf.ttf</span><br><span class="line">|   |-- script</span><br><span class="line">|   `-- tessconfigs</span><br><span class="line">|-- tesseract.exe  // 主程序</span><br><span class="line">|-- text2image.exe</span><br><span class="line">|-- unicharset_extractor.exe</span><br><span class="line">|-- wordlist2dawg.exe</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>测试最简单验证码<br><img src="/images/tesseract_ocr/kktp.gif" alt></p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 调用识别简单验证码</span></span><br><span class="line"><span class="comment"># tesseract imgfile outputfile(stdout可直接输出)</span></span><br><span class="line">&#123; Tesseract-OCR &#125; $ ./tesseract kktp.gif stdout</span><br><span class="line">Warning: Invalid resolution 0 dpi. Using 70 instead.</span><br><span class="line">Estimating resolution as 134</span><br><span class="line"></span><br><span class="line">KKTP</span><br></pre></td></tr></table></figure>
+<h3 id="安装Python调用ocr环境"><a href="#安装Python调用ocr环境" class="headerlink" title="安装Python调用ocr环境"></a>安装Python调用ocr环境</h3><p>这里需要安装两个库：<code>pillow</code>用作图片处理的， <code>pytesseract</code>对TesseractOCR进行了一层封装，可直接在Python中调用识别，但依旧是需要依赖TesseractOCR环境的。</p>
+<ul>
+<li><code>pip install pillow pytesseract</code></li>
+<li>调用识别<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">from</span> pytesseract <span class="keyword">import</span> pytesseract</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">img2str</span><span class="params">(file)</span>:</span></span><br><span class="line">    img = Image.open(file)</span><br><span class="line">    <span class="comment"># 指向tesseract安装路径，如果配置到PATH中则可以省略</span></span><br><span class="line">    pytesseract.tesseract_cmd = <span class="string">r'D:\Tesseract-OCR\tesseract.exe'</span></span><br><span class="line">    s = pytesseract.image_to_string(img)</span><br><span class="line">    <span class="keyword">return</span> s.strip()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    s = img2str(<span class="string">'kktp.gif'</span>)</span><br><span class="line">    print(s)  <span class="comment"># 成功输出 KKTP</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="实践某网站验证码"><a href="#实践某网站验证码" class="headerlink" title="实践某网站验证码"></a>实践某网站验证码</h3><p>由于该网站的验证码图片背景有噪音，不能直接识别，需要对背景噪音进行处理。</p>
+<ul>
+<li><p>将图片转为灰度图片，去除色彩（该列子中原始图片就是灰度图片，效果不大）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">img: Image.Image = Image.open(file)</span><br><span class="line">img = img.convert(<span class="string">'L'</span>)</span><br><span class="line">img.save(<span class="string">'gray.jpg'</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>对图片进行二值化处理</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">binary_img</span><span class="params">(img, threshold)</span>:</span></span><br><span class="line">    px = img.load()</span><br><span class="line">    w, h = img.size</span><br><span class="line">    <span class="keyword">for</span> x <span class="keyword">in</span> range(w):</span><br><span class="line">        <span class="keyword">for</span> y <span class="keyword">in</span> range(h):</span><br><span class="line">            p = <span class="number">0</span> <span class="keyword">if</span> px[x, y] &lt; threshold <span class="keyword">else</span> <span class="number">255</span></span><br><span class="line">            px[x, y] = p</span><br><span class="line">    <span class="keyword">return</span> img</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>去除孤立点的噪音</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">connect</span><span class="params">(x, y, img, threshold)</span>:</span></span><br><span class="line">    <span class="string">'''查看点(x,y)上下左右有多少个点与其相连'''</span></span><br><span class="line">    w, h = img.size</span><br><span class="line">    px = img.load()</span><br><span class="line">    direction = [(x - <span class="number">1</span>, y), (x + <span class="number">1</span>, y), (x, y - <span class="number">1</span>), (x, y + <span class="number">1</span>)]</span><br><span class="line">    <span class="keyword">return</span> sum(px[x, y] &lt; threshold <span class="keyword">for</span> x, y <span class="keyword">in</span> direction <span class="keyword">if</span> x &lt; w <span class="keyword">and</span> y &lt; h)</span><br><span class="line"></span><br><span class="line"><span class="comment"># ...</span></span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> range(img.width):</span><br><span class="line">    <span class="keyword">for</span> y <span class="keyword">in</span> range(img.height):</span><br><span class="line">        <span class="keyword">if</span> px[x, y] &lt; threshold:</span><br><span class="line">            c = connect(x, y, img, threshold)</span><br><span class="line">            <span class="keyword">if</span> c == <span class="number">0</span>:  <span class="comment"># 无相连点则视为孤立的噪音点</span></span><br><span class="line">                px[x, y] = <span class="number">255</span></span><br><span class="line"><span class="comment"># ...</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>以下为处理图片的结果，以此为原图、灰度、二值化、去噪音<br><img src="/images/tesseract_ocr/src.jpg" alt><br><img src="/images/tesseract_ocr/gray.jpg" alt><br><img src="/images/tesseract_ocr/bin.jpg" alt><br><img src="/images/tesseract_ocr/result.jpg" alt></p>
+<h4 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">from</span> pytesseract <span class="keyword">import</span> pytesseract</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">binary_img</span><span class="params">(img, threshold)</span>:</span></span><br><span class="line">    px = img.load()</span><br><span class="line">    w, h = img.size</span><br><span class="line">    <span class="keyword">for</span> x <span class="keyword">in</span> range(w):</span><br><span class="line">        <span class="keyword">for</span> y <span class="keyword">in</span> range(h):</span><br><span class="line">            p = <span class="number">0</span> <span class="keyword">if</span> px[x, y] &lt; threshold <span class="keyword">else</span> <span class="number">255</span></span><br><span class="line">            px[x, y] = p</span><br><span class="line">    <span class="keyword">return</span> img</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">connect</span><span class="params">(x, y, img, threshold)</span>:</span></span><br><span class="line">    <span class="string">'''查看点(x,y)上下左右有多少个点与其相连'''</span></span><br><span class="line">    w, h = img.size</span><br><span class="line">    px = img.load()</span><br><span class="line">    direction = [(x - <span class="number">1</span>, y), (x + <span class="number">1</span>, y), (x, y - <span class="number">1</span>), (x, y + <span class="number">1</span>)]</span><br><span class="line">    <span class="keyword">return</span> sum(px[x, y] &lt; threshold <span class="keyword">for</span> x, y <span class="keyword">in</span> direction <span class="keyword">if</span> x &lt; w <span class="keyword">and</span> y &lt; h)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">handle_img</span><span class="params">(file, threshold)</span>:</span></span><br><span class="line">    img: Image.Image = Image.open(file)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 灰度</span></span><br><span class="line">    img = img.convert(<span class="string">'L'</span>)</span><br><span class="line">    img.save(<span class="string">'gray.jpg'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 二值化</span></span><br><span class="line">    img = binary_img(img, threshold)</span><br><span class="line">    img.save(<span class="string">'bin.jpg'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 去背景噪音</span></span><br><span class="line">    px = img.load()</span><br><span class="line">    <span class="keyword">for</span> x <span class="keyword">in</span> range(img.width):</span><br><span class="line">        <span class="keyword">for</span> y <span class="keyword">in</span> range(img.height):</span><br><span class="line">            <span class="keyword">if</span> px[x, y] &lt; threshold:</span><br><span class="line">                c = connect(x, y, img, threshold)</span><br><span class="line">                <span class="keyword">if</span> c == <span class="number">0</span>:  <span class="comment"># 无相连点则视为孤立的噪音点</span></span><br><span class="line">                    px[x, y] = <span class="number">255</span></span><br><span class="line">    img.save(<span class="string">'result.jpg'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">img2str</span><span class="params">(file)</span>:</span></span><br><span class="line">    img = Image.open(file)</span><br><span class="line">    pytesseract.tesseract_cmd = <span class="string">r'D:\Tesseract-OCR\tesseract.exe'</span></span><br><span class="line">    s = pytesseract.image_to_string(img)</span><br><span class="line">    <span class="keyword">return</span> s.strip()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    handle_img(<span class="string">'src.jpg'</span>, <span class="number">80</span>)</span><br><span class="line">    s = img2str(<span class="string">'result.jpg'</span>)</span><br><span class="line">    print(s)</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://xiaoq1024.github.io/2020/10/24/qq-mirai/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="xiaoq">
       <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/ali.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -1102,618 +1748,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://xiaoq1024.github.io/2019/08/11/vim/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="xiaoq">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="xiaoq.py">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/08/11/vim/" itemprop="url">vim 的基本概念与操作</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-11T19:55:31+08:00">
-                2019-08-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/tools/" itemprop="url" rel="index">
-                    <span itemprop="name">tools</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>上个月在公司分享会上分享了vim的使用技巧，经过此次分享，对vim更为系统地了解了，以此稍作记录整理。   </p>
-<h2 id="vim-的设计哲学"><a href="#vim-的设计哲学" class="headerlink" title="vim 的设计哲学"></a>vim 的设计哲学</h2><p>大脑的思考速度是很快的，使用一般的编辑器是通过双手敲动键盘和拖动鼠标编辑来实现大脑的想法，这过程是比较慢的，就好比CPU和IO。<br>在键盘与鼠标之间切换是低效的，正如CPU做线程或者进程切换上下文是有性能损耗一样的，而vim提倡仅使用键盘来编辑，提供了丰富的操作，减少切换，以思考的速度来编辑。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/08/11/vim/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://xiaoq1024.github.io/2019/05/14/up-summary/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="xiaoq">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="xiaoq.py">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/05/14/up-summary/" itemprop="url">UP 上线审批系统总结</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-14T20:50:56+08:00">
-                2019-05-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/note/" itemprop="url" rel="index">
-                    <span itemprop="name">note</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>UP 上线审批系统旨在替代原来的 jira，为公司上线提供规范化流程和为后续审计提供数据支持。作为首次全栈项目，花了不少的心思，同时也踩了不少的坑，本文就做个简单的总结。</p>
-<h2 id="项目主要技术栈"><a href="#项目主要技术栈" class="headerlink" title="项目主要技术栈"></a>项目主要技术栈</h2><ul>
-<li><p>前端</p>
-<ul>
-<li>前端框架: react</li>
-<li>状态管理: react-redux、redux-thunk、immutable</li>
-<li>UI 框架: antd</li>
-<li>http 请求: axios</li>
-</ul>
-</li>
-<li><p>后端</p>
-<ul>
-<li>web框架: flask</li>
-<li>数据库和 orm: mysql sqlalchemy</li>
-<li>异步任务: celery redis</li>
-<li>部署: uwsgi nginx supervisor</li>
-</ul>
-</li>
-</ul>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/05/14/up-summary/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://xiaoq1024.github.io/2019/02/13/jd-login/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="xiaoq">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="xiaoq.py">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/02/13/jd-login/" itemprop="url">滑块验证码之京东登录</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-13T15:16:49+08:00">
-                2019-02-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/spider/" itemprop="url" rel="index">
-                    <span itemprop="name">spider</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>接到一个京东商家朋友的爬虫需求，希望能写一个程序去爬取每日京东商家后台订单数据，同时提供简单的界面展示与数据导出功能。手动登录发现需要拖动滑块验证码，接口就是一般的 json 接口，经测试发现 cookie 有效期为 2 天，由于数据需要每天都更新，那么解决滑块验证码登录是必须的了。</p>
-<h2 id="获取无缺口的验证码图片"><a href="#获取无缺口的验证码图片" class="headerlink" title="获取无缺口的验证码图片"></a>获取无缺口的验证码图片</h2><p>为了在登录时计算出滑块验证码的缺口位置，必须有一张完整的图片作为计算参考，所以第一步需要先获取所有的无缺口的图片。</p>
-<h3 id="下载多个样本"><a href="#下载多个样本" class="headerlink" title="下载多个样本"></a>下载多个样本</h3><p>获取验证码接口，返回了验证码图片和缺口图片，但是由于有边框的存在，不能简单地将缺口图片合并到验证码图片中。所以可以通过采集多张，重叠在一起，将缺口给去除。</p>
-<p><img src="/images/jd_login/jd_bg_patch.png" alt></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/02/13/jd-login/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://xiaoq1024.github.io/2018/09/29/singleton-in-python/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="xiaoq">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="xiaoq.py">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/09/29/singleton-in-python/" itemprop="url">Python 中的单例模式</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-29T16:53:15+08:00">
-                2018-09-29
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leraning/" itemprop="url" rel="index">
-                    <span itemprop="name">leraning</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>单列模式是软件开发过程中使用的一种方法，其套路为保证全局只有一个实例，一般用在配置或者缓存对象中。</p>
-<h2 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a>实现方式</h2><h3 id="通过装饰器"><a href="#通过装饰器" class="headerlink" title="通过装饰器"></a>通过装饰器</h3><p>在 Python 没有<code>new</code>运算符，而是通过调用类对象<code>Myclss()</code>来创建实例的，其中类对象<code>Myclass</code>后面跟了对圆括号<code>()</code>，这对圆括号可理解为<code>call运算符</code>，<code>call运算符</code>能对所以可调用对象(callable)进行运算。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/09/29/singleton-in-python/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1748,6 +1787,8 @@
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
+              <img class="site-author-image" itemprop="image" src="/images/ali.png" alt="xiaoq">
+            
               <p class="site-author-name" itemprop="name">xiaoq</p>
               <p class="site-description motion-element" itemprop="description">人生苦短，我用Python！</p>
           </div>
@@ -1759,7 +1800,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-count">22</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1781,7 +1822,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-count">17</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
