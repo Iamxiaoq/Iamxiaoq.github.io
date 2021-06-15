@@ -79,23 +79,23 @@
 
 
 
-<meta name="description" content="验证码作为鉴别人机的一种有效手段，会经常出现在网站的各种检测或风控中，尤其是一些关键的接口比如登录注册。现在常见的解决验证码的方案有：接入打码平台、深度学习、ocr识别。对于简单的数字字母验证码、使用ocr既节省了加入打码平台的费用，同时也没有引入技术复杂度高的深度学习。 安装TesseractOCR官网下载文档提供的下载地址只提供了3.x版本的，这里使用三方编译的4.x版本。  选择下载tess">
+<meta name="description" content="验证码作为鉴别人机的一种有效手段，会经常出现在网站的各种检测或风控中，尤其是一些关键的接口比如登录注册。现在常见的解决验证码的方案有：接入打码平台、深度学习、ocr识别。对于简单的数字字母验证码、使用ocr既节省了加入打码平台的费用，同时也没有引入技术复杂度高的深度学习。 安装TesseractOCR官网下载文档提供的下载地址只提供了3.x版本的，这里使用三方编译的4.x版本。">
 <meta name="keywords" content="验证码">
 <meta property="og:type" content="article">
 <meta property="og:title" content="在Python使用TesseractOCR识别验证码">
 <meta property="og:url" content="http://xiaoq1024.github.io/2020/12/06/tesseract_ocr-in-python/index.html">
 <meta property="og:site_name" content="xiaoq.py">
-<meta property="og:description" content="验证码作为鉴别人机的一种有效手段，会经常出现在网站的各种检测或风控中，尤其是一些关键的接口比如登录注册。现在常见的解决验证码的方案有：接入打码平台、深度学习、ocr识别。对于简单的数字字母验证码、使用ocr既节省了加入打码平台的费用，同时也没有引入技术复杂度高的深度学习。 安装TesseractOCR官网下载文档提供的下载地址只提供了3.x版本的，这里使用三方编译的4.x版本。  选择下载tess">
+<meta property="og:description" content="验证码作为鉴别人机的一种有效手段，会经常出现在网站的各种检测或风控中，尤其是一些关键的接口比如登录注册。现在常见的解决验证码的方案有：接入打码平台、深度学习、ocr识别。对于简单的数字字母验证码、使用ocr既节省了加入打码平台的费用，同时也没有引入技术复杂度高的深度学习。 安装TesseractOCR官网下载文档提供的下载地址只提供了3.x版本的，这里使用三方编译的4.x版本。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://xiaoq1024.github.io/images/tesseract_ocr/kktp.gif">
 <meta property="og:image" content="http://xiaoq1024.github.io/images/tesseract_ocr/src.jpg">
 <meta property="og:image" content="http://xiaoq1024.github.io/images/tesseract_ocr/gray.jpg">
 <meta property="og:image" content="http://xiaoq1024.github.io/images/tesseract_ocr/bin.jpg">
 <meta property="og:image" content="http://xiaoq1024.github.io/images/tesseract_ocr/result.jpg">
-<meta property="og:updated_time" content="2021-04-25T08:49:06.906Z">
+<meta property="og:updated_time" content="2021-06-15T08:02:46.143Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="在Python使用TesseractOCR识别验证码">
-<meta name="twitter:description" content="验证码作为鉴别人机的一种有效手段，会经常出现在网站的各种检测或风控中，尤其是一些关键的接口比如登录注册。现在常见的解决验证码的方案有：接入打码平台、深度学习、ocr识别。对于简单的数字字母验证码、使用ocr既节省了加入打码平台的费用，同时也没有引入技术复杂度高的深度学习。 安装TesseractOCR官网下载文档提供的下载地址只提供了3.x版本的，这里使用三方编译的4.x版本。  选择下载tess">
+<meta name="twitter:description" content="验证码作为鉴别人机的一种有效手段，会经常出现在网站的各种检测或风控中，尤其是一些关键的接口比如登录注册。现在常见的解决验证码的方案有：接入打码平台、深度学习、ocr识别。对于简单的数字字母验证码、使用ocr既节省了加入打码平台的费用，同时也没有引入技术复杂度高的深度学习。 安装TesseractOCR官网下载文档提供的下载地址只提供了3.x版本的，这里使用三方编译的4.x版本。">
 <meta name="twitter:image" content="http://xiaoq1024.github.io/images/tesseract_ocr/kktp.gif">
 
 
@@ -330,6 +330,7 @@
       
         <p>验证码作为鉴别人机的一种有效手段，会经常出现在网站的各种检测或风控中，尤其是一些关键的接口比如登录注册。<br>现在常见的解决验证码的方案有：接入打码平台、深度学习、ocr识别。对于简单的数字字母验证码、使用ocr既节省了加入打码平台的费用，同时也没有引入技术复杂度高的深度学习。</p>
 <h3 id="安装TesseractOCR"><a href="#安装TesseractOCR" class="headerlink" title="安装TesseractOCR"></a>安装TesseractOCR</h3><p><a href="https://tesseract-ocr.github.io/tessdoc/Downloads.html" target="_blank" rel="noopener">官网下载文档</a>提供的<a href="https://sourceforge.net/projects/tesseract-ocr-alt/files/" target="_blank" rel="noopener">下载地址</a>只提供了3.x版本的，这里使用<a href="https://digi.bib.uni-mannheim.de/tesseract/" target="_blank" rel="noopener">三方编译</a>的4.x版本。</p>
+<a id="more"></a>
 <ul>
 <li>选择下载<code>tesseract-ocr-w64-setup-v4.1.0.20190314.exe</code></li>
 <li>下载完成后安装</li>
@@ -389,8 +390,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/10/24/qq-mirai/" rel="next" title="搭建mirai QQ消息机器人">
-                <i class="fa fa-chevron-left"></i> 搭建mirai QQ消息机器人
+              <a href="/2020/12/06/html2pdf/" rel="next" title="使用pyppeteer将网页保存为pdf">
+                <i class="fa fa-chevron-left"></i> 使用pyppeteer将网页保存为pdf
               </a>
             
           </div>
@@ -399,8 +400,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2020/12/06/html2pdf/" rel="prev" title="使用pyppeteer将网页保存为pdf">
-                使用pyppeteer将网页保存为pdf <i class="fa fa-chevron-right"></i>
+              <a href="/2020/12/24/android-env/" rel="prev" title="安卓测试环境的搭建">
+                安卓测试环境的搭建 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -480,7 +481,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-count">23</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

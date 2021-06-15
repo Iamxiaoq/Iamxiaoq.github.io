@@ -232,6 +232,167 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://xiaoq1024.github.io/2020/10/24/qq-mirai/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xiaoq">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/ali.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xiaoq.py">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/10/24/qq-mirai/" itemprop="url">搭建mirai QQ消息机器人</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-10-24T10:22:05+08:00">
+                2020-10-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/note/" itemprop="url" rel="index">
+                    <span itemprop="name">note</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>目标为实时获取qq消息，一开始使用酷q，后面被封了，转而使用<a href="https://github.com/mamoe/mirai" target="_blank" rel="noopener">mirai</a>，但是<code>mirai</code>只是一个核心框架，需要多个组件组合才能实现目标，但网上也已经有成套的方案了，那就是<a href="https://github.com/iTXTech/mirai-console-loader" target="_blank" rel="noopener">mirai-console-loader</a>，以下为搭建过程的笔记</p>
+<ol>
+<li><p>下载解压<a href="https://github.com/iTXTech/mirai-console-loader/releases" target="_blank" rel="noopener">mcl</a></p>
+</li>
+<li><p>安装 <a href="https://code.aliyun.com/kar/ojdk-11.0.10/raw/master/jdk-11.0.10_windows-x64_bin.zip" target="_blank" rel="noopener">jdk11</a></p>
+</li>
+<li><p>安装插件</p>
+<ul>
+<li>mirai-login-solver-selenium ，初次登陆需要seleinum滑块验证，<code>{ mcl-1.0.5 } $ ./mcl.cmd --update-package net.mamoe:mirai-login-solver-selenium --channel nightly --type plugin</code></li>
+<li><a href="https://github.com/project-mirai/mirai-api-http/releases" target="_blank" rel="noopener">mirai-api-http</a>，下载jar包后放到plugins文件夹下</li>
+</ul>
+</li>
+<li><p>登陆</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"># 运行 mcl.cmd</span><br><span class="line">&#123; mcl-1.0.5 &#125; $ ./mcl.cmd</span><br><span class="line"> 17:53:18 [INFO] iTXTech Mirai Console Loader version 1.0.5-9b6cf6d</span><br><span class="line"> 17:53:18 [INFO] https://github.com/iTXTech/mirai-console-loader</span><br><span class="line"> 17:53:18 [INFO] This program is licensed under GNU AGPL v3</span><br><span class="line"> 17:53:18 [DEBUG] Loading script: announcement.js</span><br><span class="line"> 17:53:19 [DEBUG] Loading script: boot.js</span><br><span class="line"> 17:53:19 [DEBUG] Loading script: config.js</span><br><span class="line"> ....</span><br><span class="line"> &gt; </span><br><span class="line"></span><br><span class="line">&gt; login qq password  # 此处需要滑块验证 和 手机端确认</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2020/10/24/qq-mirai/" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://xiaoq1024.github.io/2019/08/11/vim/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -328,7 +489,7 @@
 <h2 id="vim-的设计哲学"><a href="#vim-的设计哲学" class="headerlink" title="vim 的设计哲学"></a>vim 的设计哲学</h2><p>大脑的思考速度是很快的，使用一般的编辑器是通过双手敲动键盘和拖动鼠标编辑来实现大脑的想法，这过程是比较慢的，就好比CPU和IO。<br>在键盘与鼠标之间切换是低效的，正如CPU做线程或者进程切换上下文是有性能损耗一样的，而vim提倡仅使用键盘来编辑，提供了丰富的操作，减少切换，以思考的速度来编辑。</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/08/11/vim/#more" rel="contents">
+            <a class="btn" href="/2019/08/11/vim/" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -492,7 +653,7 @@
 </ul>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/05/14/up-summary/#more" rel="contents">
+            <a class="btn" href="/2019/05/14/up-summary/" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -641,7 +802,7 @@
 <p><img src="/images/jd_login/jd_bg_patch.png" alt></p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/02/13/jd-login/#more" rel="contents">
+            <a class="btn" href="/2019/02/13/jd-login/" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -788,7 +949,7 @@
 <h2 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a>实现方式</h2><h3 id="通过装饰器"><a href="#通过装饰器" class="headerlink" title="通过装饰器"></a>通过装饰器</h3><p>在 Python 没有<code>new</code>运算符，而是通过调用类对象<code>Myclss()</code>来创建实例的，其中类对象<code>Myclass</code>后面跟了对圆括号<code>()</code>，这对圆括号可理解为<code>call运算符</code>，<code>call运算符</code>能对所以可调用对象(callable)进行运算。</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/09/29/singleton-in-python/#more" rel="contents">
+            <a class="btn" href="/2018/09/29/singleton-in-python/" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -936,7 +1097,7 @@
 <p>相当于一个压缩包，可以压缩任意格式任意个文件，但一般用于打包私钥和对应的证书，解压需密码</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/03/30/https-ca/#more" rel="contents">
+            <a class="btn" href="/2018/03/30/https-ca/" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1082,7 +1243,7 @@
           <h2 id="bash"><a href="#bash" class="headerlink" title="bash"></a>bash</h2><p>管理linux时，如果问哪个程序是最多使用到的，那肯定是shell程序了，常见的linux shell有：sh、bash、csh、zsh。其中bash是linux默认的shell程序，所以想要高效地管理linux，学习熟悉bash是必不可少的，bash本质上是一个shell程序，是linux中的一个可执行文件，其提供了一个让用户与操作系统kernel交互的环境，接收用户输入，将用户输入的命令选项参数等解析传递给kernel执行，将执行结果返回给用户，bash提供了许多的特性使其变得非常易用。而且对于许多其他的应用程序，他们也都提供了与bash类似或相同的特性，比如mysqlclient和ipython跟bash一样提供了历史命令功能和快捷键等等，真是一次学习，到处使用，怎么想都是一件很划算的事。<br>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/08/24/bash/#more" rel="contents">
+            <a class="btn" href="/2017/08/24/bash/" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1228,7 +1389,7 @@
           <p>爬虫本质上是从非结构化数据（网页）中提取有用的信息，并以结构化的形式（model）保存起来。而从网页中提取结构化的数据就需要用到各种html解析技术，常用的用css选择器，在Python中可以用BeautifulSoup来实现，对于前端开发者来说，或者css选择器是不错的选择，但是xpath更为强大灵活，要说xpath比起css不足的地方就是书写出来的xpath表达式往往比css选择器要长许多，然而执行速度与选择灵活方面是远胜css的。以下整理自<a href="http://www.w3school.com.cn/xpath/" target="_blank" rel="noopener">w3school</a>。</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/08/21/xpath/#more" rel="contents">
+            <a class="btn" href="/2017/08/21/xpath/" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1374,7 +1535,7 @@
           <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>爬虫过程中最不可避免的就是ip被ban了，一开始把<a href="https://xiaoqqqqqq.github.io/2017/08/02/crawl-163music/" target="_blank" rel="noopener">网易云音乐热门评论爬虫</a>部署到阿里云后没做太多的限制，导致ip被ban了，这一ban就是好几天。要想继续爬下去，走代理是不可避免的了，最开始想到的方案是是去网上抓免费的代理，无奈网上免费的代理能用的无几，去购买收费的代理吧，又觉得有些浪费了，最后想到不是还有自己正在测试的wifi能用嘛，那让阿里云上的爬虫走本地笔记本代理就好了。想法不错，有两座大山必须越过：1. Windows下怎么搭建http代理服务器？2. 笔记本在内网，阿里云如何连接？</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/08/03/http-proxy-in-lan/#more" rel="contents">
+            <a class="btn" href="/2017/08/03/http-proxy-in-lan/" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1521,153 +1682,7 @@
 <h2 id="需求分析与技术栈"><a href="#需求分析与技术栈" class="headerlink" title="需求分析与技术栈"></a>需求分析与技术栈</h2><h3 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h3><p>本项目只爬取歌手热门50首歌曲，歌曲里面只爬取热门评论。涉及到的数据有：歌手、歌曲、评论、评论用户。</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/08/02/crawl-163music/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://xiaoq1024.github.io/2017/07/29/cmder-bash/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="xiaoq">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/ali.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="xiaoq.py">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/29/cmder-bash/" itemprop="url">cmder和bash真乃天作之合</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-29T18:21:53+08:00">
-                2017-07-29
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/tools/" itemprop="url" rel="index">
-                    <span itemprop="name">tools</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>在Windows下开发，对比Linux，Windows的命令行工具确实暗淡无色，或许有人要说PowerShell不服了，但熟悉Linux的命令操作后，我希望能保持与Linux一致的操作体验。钱包充足的可以考虑转OS X，但上了Windows的贼船，想中途下船确实不易，而且许多快捷键辅助工具都用习惯了，切换到OS X不一定能找到替代品，曾经也尝试过黑苹果，但是在是太折腾了。直接转Ubuntu？还是算了，一个autohotkey就让我选择放弃了。然而别的不敢说，Windows的软件数量肯定是完胜其他的操作系统的，微软没有做好的事情，在民间大牛不断地开发积累过程中产生了许多的cmd代替方案。其中我有尝试过babun和Git for Windows，最终选择了后者，各有优劣，前者也是灰常不错的。新开博客想记录一下配置过程，又重新去配置了一番，以下就是配置过程的记录，希望能给予苦苦挣扎在Windows的cmd中的开发者一点参考。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/07/29/cmder-bash/#more" rel="contents">
+            <a class="btn" href="/2017/08/02/crawl-163music/" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1757,7 +1772,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-count">23</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
